@@ -1,6 +1,7 @@
 import { spotifyApi } from "@/pages/_app";
 import React, { useEffect, useState } from "react";
 import PlayerControls from "./PlayerControls";
+import PlayerVolume from "./PlayerVolume";
 
 export default function Player() {
     const [device, setDevice] = useState(null);
@@ -72,7 +73,7 @@ export default function Player() {
 
     return (
         <div className="flex items-center p-4">
-            <div className="flex items-center ">
+            <div className="flex flex-1 items-center ">
                 <img
                     src={track.album.images[0].url}
                     alt=""
@@ -85,7 +86,7 @@ export default function Player() {
                     </p>
                 </div>
             </div>
-            <div className="flex-1 text-center">
+            <div className="flex-1 text-center max-md:hidden">
                 <PlayerControls
                     player={localPlayer}
                     isPaused={isPaused}
@@ -93,7 +94,9 @@ export default function Player() {
                     track={track}
                 />
             </div>
-            <div className="">volume här</div>
+            <div className="flex flex-1 justify-end">
+                <PlayerVolume player={localPlayer} />
+            </div>
         </div>
     );
 }
