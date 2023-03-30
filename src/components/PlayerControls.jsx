@@ -34,7 +34,6 @@ export default function PlayerControls({ player, isPaused, position, track }) {
                         <Play
                             className="ml-1 h-5 w-5 fill-black text-black"
                             onClick={() => {
-                                console.log(player);
                                 player.togglePlay();
                             }}
                         />
