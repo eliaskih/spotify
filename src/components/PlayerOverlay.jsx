@@ -1,4 +1,3 @@
-import React from "react";
 import { ChevronDown } from "react-feather";
 import PlayerControls from "./PlayerControls";
 
@@ -10,26 +9,26 @@ export default function PlayerOverlay({
     isPaused,
     position,
     shuffle,
-    Repeat,
 }) {
     return (
         <div
-            className="transition-tranfsorm  fixed top-0 h-screen w-screen    bg-bg-dimmed duration-500 md:hidden"
+            className="fixed top-0 h-screen w-screen bg-bg-dimmed transition-transform duration-300 md:hidden"
             style={{
                 transform: `translateY(${playerOverlayIsOpen ? "0%" : "100%"})`,
             }}
         >
             <div
-                className="fixed top-4 left-3 flex h-8 w-8 items-center justify-center rounded-full hover:bg-text-dimmed/20"
+                className="fixed top-4 left-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full hover:bg-text-dimmed/20"
                 onClick={() => setPlayerOverlayIsOpen(false)}
             >
                 <ChevronDown />
             </div>
-            <div className="absolute  top-6 left-1/2 max-w-[30ch] -translate-x-1/2 truncate text-lg font-bold text-text-dimmed">
+            <div className="absolute top-6 left-1/2 max-w-[30ch] -translate-x-1/2 truncate text-lg font-bold">
                 {track.album.name}
             </div>
             <div className="flex h-full flex-col gap-20 px-5 pt-36 pb-10">
-                <div className="mx-auto aspect-square max-w-[450px] bg-red-500">
+                <div className="mx-auto mb-5 aspect-square max-w-[500px] bg-red-500">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={track.album.images[0]?.url}
                         alt=""

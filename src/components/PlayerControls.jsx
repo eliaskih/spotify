@@ -29,6 +29,7 @@ export default function PlayerControls({
                 setCurrentProgress((c) => parseFloat(c) + 1000);
             }
         }, 1000);
+
         return () => clearInterval(interval);
     }, [isPaused, player]);
 
@@ -52,15 +53,15 @@ export default function PlayerControls({
                         "h-4 w-4" +
                         (isShuffle
                             ? " text-primary"
-                            : " fill-text-dimmed hover:fill-text hover:text-text")
+                            : " fill-text-dimmed text-text-dimmed hover:fill-text hover:text-text")
                     }
                     onClick={() => {
                         spotifyApi.setShuffle(!isShuffle);
-                        setIsShuffle((e) => !c);
+                        setIsShuffle((c) => !c);
                     }}
                 />
                 <SkipBack
-                    className="h-5 w-5  fill-white opacity-90 hover:opacity-100 "
+                    className="h-5 w-5 fill-white opacity-80 hover:opacity-100"
                     onClick={() => {
                         spotifyApi.skipToPrevious();
                     }}
@@ -82,15 +83,16 @@ export default function PlayerControls({
                     )}
                 </div>
                 <SkipForward
-                    className="h-5 w-5  fill-white opacity-90 hover:opacity-100"
+                    className="h-5 w-5 fill-white opacity-80 hover:opacity-100"
                     onClick={() => {
                         spotifyApi.skipToNext();
                     }}
                 />
-                <div className="relative bg-gray-700">
+
+                <div className="relative">
                     <Repeat
                         className={
-                            "h-4 w-4" +
+                            "h-4 w-4 " +
                             (repeatMode === 0
                                 ? "text-text-dimmed hover:text-text"
                                 : "text-primary")
@@ -108,7 +110,9 @@ export default function PlayerControls({
                         <div className="absolute left-1/2 -bottom-1.5 h-1 w-1 -translate-x-1/2 rounded-full bg-primary"></div>
                     )}
                     {repeatMode === 2 && (
-                        <div className="pointer-events-none absolute -top-[1px] left-1/2 -translate-x-1/2 bg-bg-dimmed text-[6px] text-primary"></div>
+                        <div className="pointer-events-none absolute -top-[1px] left-1/2 -translate-x-1/2 bg-bg-dimmed px-[2px] text-[8px] text-primary">
+                            1
+                        </div>
                     )}
                 </div>
             </div>

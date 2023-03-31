@@ -1,13 +1,14 @@
 import Layout from "@/components/Layout";
-import React from "react";
-import { spotifyApi } from "../_app";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { spotifyApi } from "../_app";
 import { formatTime } from "@/utils/formatTime";
-import { Clock } from "react-feather";
-import { Play } from "react-feather";
+import { Clock, Play } from "react-feather";
+import Link from "next/link";
+
 export default function Playlist() {
     const router = useRouter();
+
     const {
         data: playlist,
         isLoading,
@@ -22,24 +23,26 @@ export default function Playlist() {
         return (
             <Layout>
                 <h2 className="px-4 py-16 text-center text-3xl font-bold md:text-5xl">
-                    ops something went wrong
+                    Oops, could not get that playlist
                 </h2>
                 <div className="flex justify-center">
                     <Link
                         href="/"
-                        className="mx-auto rounded-full bg-primary py-5 px-8"
+                        className="rounded-full bg-primary py-4 px-6"
                     >
                         Go back
                     </Link>
                 </div>
             </Layout>
         );
+
     return (
         <Layout>
             <div className="flex items-end gap-3 bg-gradient-to-b from-primary/60 to-bg-dimmed p-10">
                 {isLoading ? (
-                    <div className="animation-pilse h-28 w-28 flex-shrink-0 bg-neutral-600 md:h-60 md:w-60"></div>
+                    <div className="h-28 w-28 flex-shrink-0 animate-pulse bg-neutral-600 md:h-60 md:w-60"></div>
                 ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                         src={playlist.images[0]?.url}
                         alt="playlist image"
@@ -49,8 +52,8 @@ export default function Playlist() {
                 <div>
                     <p className="font-semibold text-text-dimmed">Playlist</p>
                     {isLoading ? (
-                        <div className="animate-pulse  bg-neutral-600 text-4xl font-black text-transparent md:text-6xl">
-                            This is a playlist
+                        <div className="animate-pulse bg-neutral-600 text-4xl font-black text-transparent md:text-6xl">
+                            asd asidhla
                         </div>
                     ) : (
                         <h2 className="text-4xl font-black md:text-6xl">
@@ -69,33 +72,35 @@ export default function Playlist() {
                             <Clock className="h-5 w-5" />
                         </div>
                     </div>
-                    <hr className="my-3 border-text-dimmed/30"></hr>
+
+                    <hr className="my-3 border-text-dimmed/40" />
+
                     {isLoading
                         ? Array(20)
                               .fill(null)
                               .map((_, index) => (
                                   <div
                                       key={index}
-                                      className="animation-pulse  grid grid-cols-[auto_1fr_auto] items-center gap-4 py-1.5 px-6 text-sm md:grid-cols-[auto_1fr_1fr_auto]"
+                                      className="grid animate-pulse grid-cols-[auto_1fr_auto] items-center gap-4 py-1.5 px-6 text-sm md:grid-cols-[auto_1fr_1fr_auto]"
                                   >
                                       <div className="w-8">
                                           <div className="h-4 w-4 bg-neutral-600"></div>
                                       </div>
-                                      <div className="flex gap-4 ">
+                                      <div className="flex items-center gap-4">
                                           <div className="h-12 w-12 flex-shrink-0 bg-neutral-600"></div>
                                           <div className="w-full">
                                               <div className="mb-2 h-6 w-4/6 bg-neutral-600"></div>
                                               <div className="h-4 w-2/6 bg-neutral-600"></div>
                                           </div>
                                       </div>
-                                      <div className="max-md:hidden"></div>
-                                      <div className=""></div>
+                                      <div className="h-4 w-2/6 bg-neutral-600 max-md:hidden"></div>
+                                      <div className="h-4 w-10 bg-neutral-600"></div>
                                   </div>
                               ))
                         : playlist.tracks.items.map((item, index) => (
                               <div
                                   key={item.id}
-                                  className="group grid grid-cols-[auto_1fr_auto] items-center gap-4 rounded-md py-1.5 px-6 text-sm hover:bg-text-dimmed/10  md:grid-cols-[auto_1fr_1fr_auto]"
+                                  className="group grid grid-cols-[auto_1fr_auto] items-center gap-4 rounded-md py-1.5 px-6 text-sm hover:bg-text-dimmed/10 md:grid-cols-[auto_1fr_1fr_auto]"
                                   onClick={async () => {
                                       await spotifyApi.play({
                                           context_uri: `spotify:playlist:${router.query.id}`,
@@ -105,15 +110,16 @@ export default function Playlist() {
                                       });
                                   }}
                               >
-                                  <div className=" w-8 text-base">
-                                      <p className="truncate group-hover:hidden">
+                                  <div className="w-8 text-base">
+                                      <p className="group-hover:hidden">
                                           {index + 1}
                                       </p>
-                                      <Play className="hidden h-5 w-5 fill-text-dimmed group-hover:block" />
+                                      <Play className="hidden h-4 w-4 fill-text text-text group-hover:block" />
                                   </div>
-                                  <div className="flex items-center  gap-4 overflow-hidden">
+                                  <div className="flex items-center gap-4 overflow-hidden">
+                                      {/* eslint-disable-next-line @next/next/no-img-element */}
                                       <img
-                                          src={item.track.album.images[0]?.url}
+                                          src={item.track.album.images[0].url}
                                           alt=""
                                           className="h-12 w-12"
                                       />
@@ -121,7 +127,7 @@ export default function Playlist() {
                                           <h4 className="truncate text-text">
                                               {item.track.name}
                                           </h4>
-                                          <p className="">
+                                          <p className="truncate">
                                               {item.track.artists[0].name}
                                           </p>
                                       </div>
